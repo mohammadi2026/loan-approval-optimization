@@ -8,7 +8,7 @@ import sklearn  # This is needed for the pickle file to load!
 # Load the trained model
 def load_model():
     with open("Loan_model.pkl", "rb") as file:
-        return= pickle.load(file)
+        return pickle.load(file)
 
 model = load_model()
 
