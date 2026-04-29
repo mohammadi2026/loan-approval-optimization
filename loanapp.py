@@ -9,6 +9,10 @@ import sklearn  # This is needed for the pickle file to load!
 # --- Put the Model in Drive First---
 with open("Loan_model.pkl", "rb") as file:
     model = pickle.load(file)
+
+model = model_bundle['logistic_model']
+threshold = model_bundle['threshold']
+
 # Title for the app
 st.markdown(
     "<h1 style='text-align: center; background-color: #e0f7fa; padding: 10px; color: #006064;'><b>Loan Approval Predictor</b></h1>",
