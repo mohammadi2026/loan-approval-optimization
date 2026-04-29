@@ -7,7 +7,7 @@ import sklearn  # This is needed for the pickle file to load!
 
 # Load the trained model
 # --- Put the Model in Drive First---
-with open("/content/Loan_model.pkl", "rb") as file:
+with open("Loan_model.pkl", "rb") as file:
     model = pickle.load(file)
     
 # Extract the actual logistic model and the saved threshold
