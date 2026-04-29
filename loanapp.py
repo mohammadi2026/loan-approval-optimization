@@ -6,11 +6,11 @@ import pandas as pd
 import sklearn  # This is needed for the pickle file to load!
 
 # Load the trained model
-def load_model():
     with open("Loan_model.pkl", "rb") as file:
-        return pickle.load(file)
+        model_data = pickle.load(file)
 
-model = load_model()
+actual_model = model_data['logistic_model']
+custom_threshold = model_data['threshold']
 
 # Title for the app
 st.markdown(
@@ -65,7 +65,7 @@ input_data_encoded = pd.get_dummies(input_data, columns=['Reason', 'Employment_S
 
 # 2. Add missing columns the model expects 
 # Your model expected columns like 'Reason_credit_card_refinancing', 'Lender_B', etc.
-model_columns = model.feature_names_in_
+model_columns = actual_model.feature_names_in_
 for col in model_columns:
     if col not in input_data_encoded.columns:
         input_data_encoded[col] = 0
@@ -73,14 +73,12 @@ for col in model_columns:
 # 3. Ensure columns match the training order exactly
 input_data_encoded = input_data_encoded[model_columns]
 
-if st.button("Evaluate Loan Approval"):
-    prediction = model.predict(input_data_encoded)[0]
+# 5. Predict using the custom threshold
+if st.button("Evaluate Loan"):
+    # Get the probability of approval (class 1)
+    prob_approval = actual_model.predict_proba(input_data_encoded)[0][1]
     
-    # In your project, the target 'Approved' is 1 for approved and 0 for denied 
-    if prediction == 1:
-        st.success("The prediction is: **Approved** ✅")
-        # Calculate potential payout based on Instructions 
-        payouts = {"A": 250, "B": 350, "C": 150}
-        st.info(f"Potential Revenue from Lender {lender}: ${payouts.get(lender)}")
+    if prob_approval >= custom_threshold:
+        st.success(f"Approved! (Score: {prob_approval:.2f})")
     else:
-        st.error("The prediction is: **Denied** ❌")
+        st.error(f"Denied (Score: {prob_approval:.2f})")
