@@ -10,8 +10,7 @@ import sklearn  # This is needed for the pickle file to load!
 with open("Loan_model.pkl", "rb") as file:
     model = pickle.load(file)
 
-model = model_bundle['logistic_model']
-threshold = model_bundle['threshold']
+model = {'logistic_model': logistic_model, 'threshold': custom_threshold}
 
 # Title for the app
 st.markdown(
