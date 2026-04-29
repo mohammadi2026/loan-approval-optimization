@@ -6,11 +6,11 @@ import pandas as pd
 import sklearn  # This is needed for the pickle file to load!
 
 # Load the trained model
-# --- Put the Model in Drive First---
-with open("Loan_model.pkl", "rb") as file:
-    model = pickle.load(file)
+def load_model():
+    with open("Loan_model.pkl", "rb") as file:
+        return= pickle.load(file)
 
-model = {'logistic_model': logistic_model, 'threshold': custom_threshold}
+model = load_model()
 
 # Title for the app
 st.markdown(
