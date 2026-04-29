@@ -6,8 +6,8 @@ import pandas as pd
 import sklearn  # This is needed for the pickle file to load!
 
 # Load the trained model
-    with open("Loan_model.pkl", "rb") as file:
-        model_data = pickle.load(file)
+with open("Loan_model.pkl", "rb") as file:
+    model_data = pickle.load(file)
 
 actual_model = model_data['logistic_model']
 custom_threshold = model_data['threshold']
